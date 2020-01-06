@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div>
+    手机号 ：<input type="text" size="10" id="mobile">
+    密码 ：<input type="password" size="10" id="pass">
+    <input type="button" value="登录" id="sub">
+
+</div>
+
+</body>
+<script src="http://10.0.0.64:5001/js/jquery-1.9.1.min.js"></script>
+<script>
+
+    $(document).ready(function(){
+
+        $('#sub').on("click",function(){
+
+            var password,mobile;
+            password = $('#pass').val();
+            mobile = $('#mobile').val();
+
+            $.ajax("/api/login",{
+                  type:"post",
+
+                dataType:'json',
+                data:{mobile:mobile,password:password},
+                success:function(res){
+
+                    if(res.statusCode == 0){
+
+                          window.localStorage.setItem("api_token",res.data.api_token);
+                          window.localStorage.setItem("user_id",res.data.id);
+                          window.location.href="/chats"
+                    }else{
+                        alert("密码错误")
+                    }
+
+
+                },
+                error:function(){
+                    alert("密码错误")
+                }
+            });
+          /*  $.post("/api/login",{mobile:mobile,password:password},function(res){
+
+                if(res.statusCode == 0){
+
+                    console.dir(res);
+                }else{
+                    alert("密码错误")
+                }
+
+
+            }, 'json')*/
+
+
+        })
+    });
+
+</script>
+</html>

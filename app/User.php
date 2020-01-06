@@ -1,0 +1,44 @@
+<?php
+
+namespace App;
+
+use Illuminate\Notifications\Notifiable;
+
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Fruits\Apple\Auth\Passwords\CanResetPassword;
+use Fruits\Apple\Channels\NotificationFor;
+
+class User extends Authenticatable
+{
+    use Notifiable,NotificationFor,CanResetPassword;
+
+    public $apiToken;
+    protected $dateFormat = 'U';
+    protected $table = 'users';
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['mobile', 'password', 'identity', 'parent_id', 'initial_id', 'shara_code', 'level','name','groupchat'];
+
+    /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password', 'remember_token',
+    ];
+
+    /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
+
+
+}
