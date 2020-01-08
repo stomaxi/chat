@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\SendTalk;
 use App\Repositories\TaskRepository;
 use Illuminate\Console\Command;
 
@@ -39,11 +40,12 @@ class CheckRedPacketOverTime extends Command
     public function handle()
     {
         $obj = resolve(TaskRepository::class);
+        $this->handData($obj);
     }
     public function handData($obj)
     {
         $w = array(
-            'status' => 1,
+            array('status', '=', 1),
             array('efffet_at','<', time())
         );
         $datas = $obj->storage()->where($w)->get();
@@ -69,9 +71,9 @@ class CheckRedPacketOverTime extends Command
                             "start_time"=>$time,
                             'end_time' => $time+config('share.red_packet.efffet_at'),
                             'red_packet_id' => $v->order,
-                            'repeat_num' => $v->repeat_num +1
+                            'repeat_num' => $v->repeat_num
                         );
-                        event(new SendTalk($content,1));//发送红包通知
+                        event(new SendTalk($content,1,1));//发送红包通知
                     }
                 }
 

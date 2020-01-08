@@ -35,6 +35,13 @@ class CreateTasksTable extends Migration
             $table->integer('complaints_id',0)->nullable()->comment('投诉id');
             $table->integer('cancel_at',0)->nullable()->comment('取消时间');
             $table->integer('cancel_reward',0)->nullable()->comment('取消奖励');
+
+            $table->integer('func_data')->nullable()->comment('通知内容');
+            $table->integer('func_num',0)->default(0)->comment('通知次数');
+            $table->integer('next_func_time',0)->nullable()->comment('下一次通知时间');
+            $table->integer('is_func',0)->default(0)->comment('是否通知');
+
+
             $table->integer('created_at',0)->nullable()->comment('');
              $table->integer('updated_at',0)->nullable()->comment('');
              $table->integer('deleted_at',0)->nullable()->default(null)->comment('');

@@ -118,7 +118,7 @@ Route::middleware('auth:api')->group(function () {
     Route::post('task/state', 'TaskController@judgeState');//获取红包状态---聊天页面使用
 
     //获取用户是否在线
-    Route::post('user/isonline', 'TalkController@isOnline');//获取红包状态---聊天页面使用
+    Route::post('user/isonline', 'TalkController@isOnline');//查询用户是否在线
 
 
 });
@@ -138,4 +138,4 @@ Route::post('task/status', 'TaskController@getStauts');//商户获取用户状�
 Route::post('task/pay/money', 'TaskController@setPayMoney');//商户付款
 Route::post('task/cancel', 'TaskController@setCancel');//商户主动取消订单
 Route::post('task/complaint', 'TaskController@setComplaints');//商户订单异常申请api
-
+Route::post('task/cash', 'MerchantCashOrderController@applyForCash');//商户提现申请

@@ -45,6 +45,7 @@ class RedPacketApi extends Command
     public $status_url = 'http://10.0.6.113:8019/api/task/status';
     public $payMoney_url = 'http://10.0.6.113:8019/api/task/pay/money';
     public $cancel_url = 'http://10.0.6.113:8019/api/task/cancel';
+    public  $cash_url = 'http://10.0.6.113:8019/api/task/cash';
 
 
 
@@ -76,6 +77,7 @@ class RedPacketApi extends Command
             $this->status_url = 'http://10.0.5.81:8083/api/task/status';
             $this->payMoney_url = 'http://10.0.5.81:8083/api/task/pay/money';
             $this->cancel_url = 'http://10.0.5.81:8083/api/task/cancel';
+            $this->cash_url = 'http://10.0.5.81:8083/api/task/cash';
         }
 
         $user = $this->getUser();
@@ -108,6 +110,10 @@ class RedPacketApi extends Command
             }
             $data = $this->cancel($user);
             $result = $this->curl($this->cancel_url, $data, 'POST');
+        }elseif ($this->type == 5){
+            $data = $this->cash($user);
+            $result = $this->curl($this->cash_url, $data, 'POST');
+
         }else{
             return false;
         }
@@ -195,6 +201,19 @@ class RedPacketApi extends Command
         return $data_packet;
     }
 
+
+    //提现申请
+    public function cash(RedPacket $redPacket)
+    {
+        $data_packet = array(
+            'app_id' => $redPacket->app_id,
+            'time' => time(),
+            'num' => $this->num,
+            'service' => $redPacket->service,
+        );
+        $data_packet['sign'] = $this->sign($data_packet);
+        return $data_packet;
+    }
 
 
     //付款

@@ -10,6 +10,7 @@ namespace App\Storage\Database;
 
 use App\Events\NoticeUser;
 use App\Events\SendTalk;
+use App\Repositories\TaskRepository;
 use App\Storage\Database;
 use App\Generator\Storage\Database\TaskTrait;
 use App\Events\RedPacketFun;
@@ -240,14 +241,15 @@ class Task extends Database
         $task = $this->where($w)->first();
         $task->status = self::ORDER_NO_PAYMONEY;
         $task->set_complaints_at = time();
-        $notice = array(
-            'type' => 3,
-            'order' => $order,
-            'pay' => '',
-            'money' => '',
-            'content' => '用户投诉当前订单',
-        );
-        event(new RedPacketFun($task->send_uid,$notice));
+//        $notice = array(
+//            'type' => 3,
+//            'order' => $order,
+//            'pay' => '',
+//            'money' => '',
+//            'content' => '用户投诉当前订单',
+//        );
+//        event(new RedPacketFun($task->send_uid,$notice));
+        resolve(TaskRepository::class)->sendRedPackFunc($task,TaskRepository::FUNC_COMPLAINT);
         return $task->save();
     }
 
@@ -279,14 +281,15 @@ class Task extends Database
         $task->status = self::ORDER_NORECEIPT;
         $ret = $task->save();
         if ($ret){
-            $notice = array(
-                'type' => 4,
-                'order' => $task->order,
-                'pay' => '',
-                'money' => '',
-                'content' => '任务无人接单，已取消',
-            );
-            event(new RedPacketFun($task->send_uid,$notice));
+//            $notice = array(
+//                'type' => 4,
+//                'order' => $task->order,
+//                'pay' => '',
+//                'money' => '',
+//                'content' => '任务无人接单，已取消',
+//            );
+//            event(new RedPacketFun($task->send_uid,$notice));
+            resolve(TaskRepository::class)->sendRedPackFunc($task, TaskRepository::FUNC_CANCEL);
             return true;
         }
         return false;
@@ -333,6 +336,22 @@ class Task extends Database
             'data' => $data,
             'total' => $total
         ];
+    }
+
+
+    /**
+     *
+     * 根据订单id获取订单模型
+     *
+     * @param  $order int 订单order
+     * @return Task;
+     * */
+    public static function getMode($order)
+    {
+        $w = [
+            'order' => $order
+        ];
+        return self::where($w)->first();
     }
 
 }

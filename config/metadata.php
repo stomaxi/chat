@@ -323,4 +323,24 @@ return [
         'table' => 'notices'
     ],
 
+
+    //商户提现
+    'MerchantCashOrder' => [
+        'propertys' => [
+            'id' => ['schema' => ['type' => 'increments'], 'fieldName' => 'id', 'insert' => false, 'update' => false],
+            'uid' => ['schema' => ['type' => 'integer'], 'fieldName' => 'uid', 'insert' => true, 'update' => false],
+            'order' => ['schema' => ['type' => 'integer'], 'fieldName' => 'order', 'insert' => true, 'update' => false],
+            'type' => ['schema' => ['type' => 'tinyinteger'], 'fieldName' => 'type', 'insert' => true, 'update' => false],
+            'status' => ['schema' => ['type' => 'tinyinteger'], 'fieldName' => 'status', 'insert' => true, 'update' => false],
+            'num' => ['schema' => ['type' => 'integer'], 'fieldName' => 'num', 'insert' => true, 'update' => false],
+            'admin_uid' => ['schema' => ['type' => 'integer'], 'fieldName' => 'admin_uid', 'insert' => true, 'update' => false],
+            'createdAt' => ['schema' => ['type' => 'integer', 'null' => true], 'fieldName' => 'created_at', 'insert' => false, 'update' => false],
+            'updatedAt' => ['schema' => ['type' => 'integer', 'null' => true], 'fieldName' => 'updated_at', 'insert' => false, 'update' => false],
+            'deletedAt' => ['schema' => ['type' => 'integer', 'null' => true, 'default' => null], 'fieldName' => 'deleted_at', 'insert' => false, 'update' => false],
+
+        ],
+        'softDelete' => true,
+        'module' => ['ctrl', 'repo', 'data'],
+        'table' => 'merchant_cash_order'
+    ],
 ];

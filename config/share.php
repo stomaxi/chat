@@ -4,8 +4,8 @@ return [
     'max' => 5,//分享码层级
     'rate' => '0.2',//群主分享率 20%
     'term_of_validity' => 86400,//挂单有效时间 单位秒数
-    'order_term_of_validity' => 180,//订单有效时间
-    'order_pay_currency_overtime' => 180,//卖家超时未付币
+    'order_term_of_validity' => 60,//订单有效时间
+    'order_pay_currency_overtime' => 60,//卖家超时未付币
 
     'webSocket' => [
         'name' => 'ChatGateway',//设置名称，方便status时查看
@@ -32,7 +32,8 @@ return [
         'complaints_at_user' => 120,//用户限期支付币
         'pay_money_expire' => 0,//商户红包任务过期付rmb扣群主账户奖励
         'repeat_num' => 3,//红包重发次数 总次数 +1；
-        'repeat_time' => 600,//重发红包有效期
+        'repeat_time' => 60,//重发红包有效期
+        'func_num' => 5,//回调总次数
     ],
 
     'group'=>[

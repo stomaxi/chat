@@ -30,7 +30,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('checkOrderNoPayCurrency')->everyMinute();//定时检查挂单卖家超时未付款
         $schedule->command('CheckTaskPayMoneyExpire')->everyMinute();//定时检查红包商户超时未付款订单取消赔偿
         $schedule->command('CheckRedPacketOverTime')->everyMinute();//过期重发红包
-
+        $schedule->command('mute:cancel')->everyMinute();//禁言过期定时通知
+        $schedule->command('task:func')->everyMinute();//回调通知红包状态
     }
 
     /**

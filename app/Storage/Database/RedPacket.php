@@ -26,4 +26,10 @@ class RedPacket extends Database
         'deleted_at' => 'deletedAt',
     ];
 
+    public function account()
+    {
+        return $this->hasOne('App\Storage\Database\Account','uid','app_id');
+
+    }
+
 }
